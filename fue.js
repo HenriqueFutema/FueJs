@@ -44,9 +44,9 @@ class Fue{
     }
 
     mapDirectives(el, type, value){
-        console.log(el, type, value)
         const typeDirective = {
             '@click': () => this.onClick(el, value),
+            'v-model': () => this.vModel(el, value),
             'default': () => console.log("unknown directive")
         }
         return (typeDirective[type] || typeDirective['default'])()
@@ -56,6 +56,18 @@ class Fue{
         el.addEventListener('click', this.methods[method])
     }
 
+    vModel(el, data){
+        el.addEventListener('input', ()=>{
+            this.data[data] = el.value
+        })
+    }
+
+}
+
+Fue.newComponent = function({el='#app', name='', html=`<p>Component ${name} <span>works!</span></p>`, data={}, methods={}}) {
+    const $el = document.querySelector(el)
+    console.log(html)
+    $el.insertAdjacentHTML('beforeend', html)
 }
 
 export { Fue }
