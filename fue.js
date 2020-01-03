@@ -27,14 +27,14 @@ class Fue{
         const data = this.data
         elements.map(element => {
             const attrs = element.attributes
-            for(const [k, v] of Object.entries(attrs)){
+            for(const v of Object.values(attrs)){
                 const nameAttr = v.name
                 const attrToBind = v.value.split(/(\{\{[^}]+\}\})/g).filter(x => x !== '')
                 attrToBind.map((_attrToBind) => _attrToBind.match(/^\{\{[^}]+\}\}$/) ? bindingAttr(nameAttr, _attrToBind) : _attrToBind)
             }
             function bindingAttr(name, value){
                 const _value = value.replace(/^\{\{([^}]+)\}\}$/, '$1').trim()
-                return element.setAttribute(name, data[_value])
+                return element.setAttribute(name, data[_value] ? data[_value] : value)
             }
         })
     }
