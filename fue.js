@@ -64,4 +64,10 @@ class Fue{
 
 }
 
+Fue.newComponent = function({el='#app', name='', html=`<p>Component ${name} <span>works!</span></p>`, data={}, methods={}}) {
+    const $el = document.querySelector(el)
+    console.log(html)
+    $el.insertAdjacentHTML('beforeend', html)
+}
+
 export { Fue }

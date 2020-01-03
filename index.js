@@ -13,3 +13,6 @@ const fue = new Fue({
         }
     }
 })
+
+Fue.newComponent({
+})
