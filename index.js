@@ -7,8 +7,9 @@ const fue = new Fue({
         count: 1
     },
     methods:{
-        click(){
-            console.log(this.count)
+        click: function(){
+            console.log("aaaaa")
+            console.log(fue.data.count)
         }
     }
 })

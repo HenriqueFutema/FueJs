@@ -28,19 +28,32 @@ class Fue{
         elements.map(element => {
             const attrs = element.attributes
             for(const v of Object.values(attrs)){
+                if (v.name[0] === '@' || v.name[1] === '-') {
+                    return this.mapDirectives(element, v.name, v.value)
+                }
+
                 const nameAttr = v.name
                 const attrToBind = v.value.split(/(\{\{[^}]+\}\})/g).filter(x => x !== '')
                 attrToBind.map((_attrToBind) => _attrToBind.match(/^\{\{[^}]+\}\}$/) ? bindingAttr(nameAttr, _attrToBind) : _attrToBind)
             }
             function bindingAttr(name, value){
                 const _value = value.replace(/^\{\{([^}]+)\}\}$/, '$1').trim()
-                return element.setAttribute(name, data[_value])
+                return element.setAttribute(name, data[_value] ? data[_value] : value)
             }
         })
     }
 
-    mapBindMethods(){
+    mapDirectives(el, type, value){
+        console.log(el, type, value)
+        const typeDirective = {
+            '@click': () => this.onClick(el, value),
+            'default': () => console.log("unknown directive")
+        }
+        return (typeDirective[type] || typeDirective['default'])()
+    }
 
+    onClick(el, method){
+        el.addEventListener('click', this.methods[method])
     }
 
 }
