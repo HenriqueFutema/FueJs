@@ -5,15 +5,13 @@ class Fue{
         this.data = data;
         this.methods = methods;
         
-        window.onLoad = this.mapBindText()
+        window.onLoad = this.mapBindText(), this.mapBindAttrs()
     }
-
-
 
     mapBindText(){
         const textToBind = [...this.el.querySelectorAll('*')]
         textToBind.map(element =>{
-            const _element = element.outerHTML
+            const _element = element.innerHTML
             const data = this.data
             const text = _element.split(/(\{\{[^}]+\}\})/g).filter(x => x !== '')
             text.map((_textValue) => _textValue.match(/^\{\{[^}]+\}\}$/) ? binding(_textValue) : _textValue)
@@ -22,6 +20,17 @@ class Fue{
                 return element.innerHTML = element.innerHTML.replace(textToBind, data[_textToBind] ? data[_textToBind] : textToBind)
             }       
         })
+    }
+
+    mapBindAttrs(){
+        const elements = [...this.el.querySelectorAll('*')]
+        elements.map(element => {
+            console.log(element)
+        })
+    }
+
+    mapBindMethods(){
+
     }
 
 }
