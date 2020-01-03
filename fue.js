@@ -44,9 +44,9 @@ class Fue{
     }
 
     mapDirectives(el, type, value){
-        console.log(el, type, value)
         const typeDirective = {
             '@click': () => this.onClick(el, value),
+            'v-model': () => this.vModel(el, value),
             'default': () => console.log("unknown directive")
         }
         return (typeDirective[type] || typeDirective['default'])()
@@ -54,6 +54,12 @@ class Fue{
 
     onClick(el, method){
         el.addEventListener('click', this.methods[method])
+    }
+
+    vModel(el, data){
+        el.addEventListener('input', ()=>{
+            this.data[data] = el.value
+        })
     }
 
 }
