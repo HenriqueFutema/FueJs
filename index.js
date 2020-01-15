@@ -15,4 +15,4 @@ const fue = new Fue({
     }
 })
 
-const meuComponent = () => Fue.newComponent({ el: '#app', name: 'newComponent' })
+const meuComponent = () => Fue.newComponent({ el: '#app', name: 'newComponent', html: '<p>call me by: {{ test }} <span>works!</span></p>', data:{test: 'aaaa'}})
