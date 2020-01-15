@@ -1,7 +1,7 @@
 class Fue{
 
     constructor({el='#app', data={}, methods={}}){
-        this.el = document.querySelector(el) ? document.querySelector(el) : console.log(`Can not find the element ${el}`)
+        this.el = document.querySelector(el) ? document.querySelector(el) : console.error(`Can not find the element ${el}`)
         this.data = data;
         this.methods = methods;
         
@@ -47,7 +47,7 @@ class Fue{
         const typeDirective = {
             '@click': () => this.onClick(el, value),
             'v-model': () => this.vModel(el, value),
-            'default': () => console.log("unknown directive")
+            'default': () => console.error("unknown directive")
         }
         return (typeDirective[type] || typeDirective['default'])()
     }
