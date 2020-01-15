@@ -9,10 +9,10 @@ const fue = new Fue({
     methods:{
         click: function(){
             console.log("aaaaa")
+            meuComponent()
             console.log(fue.data.count)
         }
     }
 })
 
-Fue.newComponent({
-})
+const meuComponent = () => Fue.newComponent({ el: '#app', name: 'newComponent' })
