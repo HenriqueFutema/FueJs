@@ -9,11 +9,12 @@ class Fue {
     (window.onLoad = this.mapBindText()), this.mapBindAttrs();
   }
 
-  mapBindText() {
-    const textToBind = [...this.el.querySelectorAll("*")];
+  mapBindText($el = [], _data = {}) {
+    console.log(_data);
+    const textToBind = $el !== [] ? [...this.el.querySelectorAll("*")] : [$el];
     textToBind.map(element => {
       const _element = element.innerHTML;
-      const data = this.data;
+      const data = _data !== {} ? this.data : _data;
       const text = _element.split(/(\{\{[^}]+\}\})/g).filter(x => x !== "");
       text.map(_textValue =>
         _textValue.match(/^\{\{[^}]+\}\}$/) ? binding(_textValue) : _textValue
@@ -30,9 +31,9 @@ class Fue {
     });
   }
 
-  mapBindAttrs() {
-    const elements = [...this.el.querySelectorAll("*")];
-    const data = this.data;
+  mapBindAttrs($el, _data) {
+    const elements = $el !== [] ? [...this.el.querySelectorAll("*")] : [$el];
+    const data = _data !== {} ? this.data : _data;
     elements.map(element => {
       const attrs = element.attributes;
       for (const v of Object.values(attrs)) {
@@ -61,6 +62,7 @@ class Fue {
     const typeDirective = {
       "@click": () => this.onClick(el, value),
       "v-model": () => this.vModel(el, value),
+      "v-for": () => this.vFor(el, value),
       default: () => console.error("unknown directive")
     };
     return (typeDirective[type] || typeDirective["default"])();
@@ -74,6 +76,35 @@ class Fue {
     el.addEventListener("input", () => {
       this.data[data] = el.value;
     });
+  }
+
+  vFor(el, data) {
+    console.log(el);
+    const falseData = data.split(" ");
+    let value = falseData[0];
+    const arrayMap = falseData[2];
+    const _data = this.data[arrayMap];
+    const $el = [...this.el.querySelectorAll("*")];
+    for (value of _data) {
+      $el.map(element => {
+        const _element = element.innerHTML;
+        const text = _element.split(/(\{\{[^}]+\}\})/g).filter(x => x !== "");
+        text.map(_textValue =>
+          _textValue.match(/^\{\{[^}]+\}\}$/) ? binding(_textValue) : _textValue
+        );
+        function binding(textToBind) {
+          const _textToBind = textToBind
+            .replace(/^\{\{([^}]+)\}\}$/, "$1")
+            .trim();
+          const arrTextToBind = _textToBind.split(".");
+
+          return (element.innerHTML = element.innerHTML.replace(
+            textToBind,
+            data[_textToBind] ? data[_textToBind] : value[arrTextToBind[1]]
+          ));
+        }
+      });
+    }
   }
 }
 
