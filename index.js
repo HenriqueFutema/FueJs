@@ -4,7 +4,12 @@ const fue = new Fue({
   el: "#app",
   data: {
     name: "Henrique",
-    count: 1
+    count: 1,
+    users: [
+      { id: 1, name: "João" },
+      { id: 2, name: "Pedro" },
+      { id: 3, name: "Paulo" }
+    ]
   },
   methods: {
     click: function() {

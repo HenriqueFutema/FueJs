@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Fue -> Vue</title>
-</head>
-<body>
-    
+  </head>
+  <body>
     <div id="app">
-        <p id="nome">{{ name }}</p>
-        <p test="{{countt}}" id={{name}}>Test</p>
-        <input type="text" v-model="name">
-        <button @click="click">Click</button>
+      <div v-for="user in users">
+        <p>Test</p>
+      </div>
+      <p id="nome">{{ name }}</p>
+      <p test="{{countt}}" id="{{name}}">Test</p>
+      <input type="text" v-model="name" />
+      <button @click="click">Click</button>
     </div>
 
     <script src="./index.js"></script>
-</body>
+  </body>
 </html>
