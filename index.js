@@ -14,8 +14,8 @@ const fue = new Fue({
   methods: {
     click: function() {
       console.log("aaaaa");
-      meuComponent();
       console.log(fue.data.name);
+      meuComponent();
     }
   }
 });

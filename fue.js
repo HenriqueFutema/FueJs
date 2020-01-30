@@ -59,20 +59,28 @@ class Fue {
   }
 
   mapDirectives(el, type, value) {
+    const hasModificator = type.includes(".");
+    const _type = type;
+    const modificator = "";
+    if (hasModificator) {
+      _type = type.split(".")[0];
+      modificator = type.split(".")[1];
+    }
+
     const typeDirective = {
       "@click": () => this.onClick(el, value),
-      "v-model": () => this.vModel(el, value),
+      "v-model": () => this.vModel(el, value, modificator),
       "v-for": () => this.vFor(el, value),
       default: () => console.error("unknown directive")
     };
-    return (typeDirective[type] || typeDirective["default"])();
+    return (typeDirective[_type] || typeDirective["default"])();
   }
 
   onClick(el, method) {
     el.addEventListener("click", this.methods[method]);
   }
 
-  vModel(el, data) {
+  vModel(el, data, modificator) {
     el.addEventListener("input", () => {
       this.data[data] = el.value;
     });
