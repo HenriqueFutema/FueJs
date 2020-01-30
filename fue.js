@@ -82,7 +82,7 @@ class Fue {
 
   vModel(el, data, modificator) {
     el.addEventListener("input", () => {
-      this.data[data] = el.value;
+      this.data[data] = modificator === "trim" ? el.value.trim() : el.value;
     });
   }
 
