@@ -10,7 +10,6 @@ class Fue {
   }
 
   mapBindText($el = [], _data = {}) {
-    console.log(_data);
     const textToBind = $el !== [] ? [...this.el.querySelectorAll("*")] : [$el];
     textToBind.map(element => {
       const _element = element.innerHTML;
@@ -100,25 +99,31 @@ class Fue {
   }
 
   vFor(el, data) {
-    console.log(el);
     const falseData = data.split(" ");
     let value = falseData[0];
     const arrayMap = falseData[2];
     const _data = this.data[arrayMap];
-    const $el = [...this.el.querySelectorAll("*")];
+    const $el = [...this.el.querySelectorAll(`[v-for="${data}"]`)];
+    console.log($el);
+    const htmlToRepeat = $el[0].children[0].outerHTML;
     if (_data === undefined) return;
     for (value of _data) {
       $el.map(element => {
-        const _element = element.innerHTML;
+        const _element = element.innerHTML.trim();
         const text = _element.split(/(\{\{[^}]+\}\})/g).filter(x => x !== "");
-        text.map(_textValue =>
-          _textValue.match(/^\{\{[^}]+\}\}$/) ? binding(_textValue) : _textValue
-        );
+        console.log(text);
+
+        text.map(_textValue => {
+          _textValue.match(/^\{\{[^}]+\}\}$/)
+            ? binding(_textValue)
+            : _textValue;
+        });
         function binding(textToBind) {
           const _textToBind = textToBind
             .replace(/^\{\{([^}]+)\}\}$/, "$1")
             .trim();
           const arrTextToBind = _textToBind.split(".");
+          element.insertAdjacentHTML("beforeend", htmlToRepeat);
 
           return (element.innerHTML = element.innerHTML.replace(
             textToBind,
@@ -127,6 +132,10 @@ class Fue {
         }
       });
     }
+    const lastChild = $el[0].childNodes;
+    const childToRemove = lastChild[lastChild.length - 1];
+
+    $el[0].removeChild(childToRemove);
   }
 }
 
