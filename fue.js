@@ -81,7 +81,8 @@ class Fue {
   }
 
   vModel(el, data, modificator) {
-    el.addEventListener("input", () => {
+    const typeEvent = modificator === "lazy" ? "change" : "input";
+    el.addEventListener(typeEvent, () => {
       this.data[data] = modificator === "trim" ? el.value.trim() : el.value;
     });
   }
