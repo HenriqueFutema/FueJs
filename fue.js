@@ -80,11 +80,23 @@ class Fue {
     el.addEventListener("click", this.methods[method]);
   }
 
-  vModel(el, data, modificator) {
+  vModel(el, data, modificator = "") {
     const typeEvent = modificator === "lazy" ? "change" : "input";
-    el.addEventListener(typeEvent, () => {
-      this.data[data] = modificator === "trim" ? el.value.trim() : el.value;
-    });
+    if (modificator === "number") {
+      return el.addEventListener(typeEvent, () => {
+        this.data[data] = parseFloat(el.value);
+      });
+    }
+    if (
+      modificator === "" ||
+      modificator === "trim" ||
+      modificator === "lazy"
+    ) {
+      return el.addEventListener(typeEvent, () => {
+        this.data[data] = modificator === "trim" ? el.value.trim() : el.value;
+      });
+    }
+    return console.error("modificator does not exists");
   }
 
   vFor(el, data) {
