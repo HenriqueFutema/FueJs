@@ -60,8 +60,8 @@ class Fue {
 
   mapDirectives(el, type, value) {
     const hasModificator = type.includes(".");
-    const _type = type;
-    const modificator = "";
+    let _type = type;
+    let modificator = "";
     if (hasModificator) {
       _type = type.split(".")[0];
       modificator = type.split(".")[1];
