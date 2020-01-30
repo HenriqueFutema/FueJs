@@ -106,6 +106,7 @@ class Fue {
     const arrayMap = falseData[2];
     const _data = this.data[arrayMap];
     const $el = [...this.el.querySelectorAll("*")];
+    if (_data === undefined) return;
     for (value of _data) {
       $el.map(element => {
         const _element = element.innerHTML;
