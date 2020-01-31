@@ -70,6 +70,7 @@ class Fue {
       "@click": () => this.onClick(el, value),
       "v-model": () => this.vModel(el, value, modificator),
       "v-for": () => this.vFor(el, value),
+      "v-if": () => this.vIf(el, value),
       default: () => console.error("unknown directive")
     };
     return (typeDirective[_type] || typeDirective["default"])();
@@ -137,9 +138,14 @@ class Fue {
 
     $el[0].removeChild(childToRemove);
   }
+
+  vIf(el, data) {
+    return;
+  }
+
 }
 
-Fue.newComponent = function({
+Fue.newComponent = function ({
   el = "#app",
   name = "",
   html = `<p>Component ${name} <span>works!</span></p>`,
