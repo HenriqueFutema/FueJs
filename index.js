@@ -9,10 +9,11 @@ const fue = new Fue({
       { id: 1, name: "João" },
       { id: 2, name: "Pedro" },
       { id: 3, name: "Paulo" }
-    ]
+    ],
+    show: true
   },
   methods: {
-    click: function() {
+    click: function () {
       console.log("aaaaa");
       console.log(fue.data.name);
       meuComponent();

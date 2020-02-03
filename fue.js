@@ -70,6 +70,7 @@ class Fue {
       "@click": () => this.onClick(el, value),
       "v-model": () => this.vModel(el, value, modificator),
       "v-for": () => this.vFor(el, value),
+      "v-if": () => this.vIf(el, value),
       default: () => console.error("unknown directive")
     };
     return (typeDirective[_type] || typeDirective["default"])();
@@ -104,14 +105,12 @@ class Fue {
     const arrayMap = falseData[2];
     const _data = this.data[arrayMap];
     const $el = [...this.el.querySelectorAll(`[v-for="${data}"]`)];
-    console.log($el);
     const htmlToRepeat = $el[0].children[0].outerHTML;
     if (_data === undefined) return;
     for (value of _data) {
       $el.map(element => {
         const _element = element.innerHTML.trim();
         const text = _element.split(/(\{\{[^}]+\}\})/g).filter(x => x !== "");
-        console.log(text);
 
         text.map(_textValue => {
           _textValue.match(/^\{\{[^}]+\}\}$/)
@@ -137,9 +136,25 @@ class Fue {
 
     $el[0].removeChild(childToRemove);
   }
+
+  vIf(el, data) {
+    console.log(el, data);
+    const falseData = data.split(" ");
+    const conditional = {
+      data: falseData[0],
+      operator: falseData[1],
+      compare: falseData[2]
+    }
+
+    const allOperators = {
+      '===': function () { }
+    }
+
+  }
+
 }
 
-Fue.newComponent = function({
+Fue.newComponent = function ({
   el = "#app",
   name = "",
   html = `<p>Component ${name} <span>works!</span></p>`,
