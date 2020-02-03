@@ -105,14 +105,12 @@ class Fue {
     const arrayMap = falseData[2];
     const _data = this.data[arrayMap];
     const $el = [...this.el.querySelectorAll(`[v-for="${data}"]`)];
-    console.log($el);
     const htmlToRepeat = $el[0].children[0].outerHTML;
     if (_data === undefined) return;
     for (value of _data) {
       $el.map(element => {
         const _element = element.innerHTML.trim();
         const text = _element.split(/(\{\{[^}]+\}\})/g).filter(x => x !== "");
-        console.log(text);
 
         text.map(_textValue => {
           _textValue.match(/^\{\{[^}]+\}\}$/)
@@ -140,7 +138,18 @@ class Fue {
   }
 
   vIf(el, data) {
-    return;
+    console.log(el, data);
+    const falseData = data.split(" ");
+    const conditional = {
+      data: falseData[0],
+      operator: falseData[1],
+      compare: falseData[2]
+    }
+
+    const allOperators = {
+      '===': function () { }
+    }
+
   }
 
 }
