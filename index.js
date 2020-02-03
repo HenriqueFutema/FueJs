@@ -25,6 +25,6 @@ const meuComponent = () =>
   Fue.newComponent({
     el: "#app",
     name: "newComponent",
-    html: "<p>call me by: {{ test }} <span>works!</span></p>",
+    html: "<p>call me by: test <span>works!</span></p>",
     data: { test: "aaaa" }
   });
