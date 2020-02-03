@@ -138,17 +138,21 @@ class Fue {
   }
 
   vIf(el, data) {
-    console.log(el, data);
     const falseData = data.split(" ");
     const conditional = {
-      data: falseData[0],
+      data: this.data[falseData[0]] || falseData[0],
       operator: falseData[1],
-      compare: falseData[2]
+      compare: this.data[falseData[2]] || falseData[2]
     }
 
+    console.log(this.data)
+
     const allOperators = {
-      '===': function () { }
+      '===': () => conditional.data === conditional.compare ? el.style.display = 'block' : el.style.display = 'none',
+      '!==': () => conditional.data !== conditional.compare ? el.style.display = 'block' : el.style.display = 'none'
     }
+
+    return (allOperators[conditional.operator])()
 
   }
 
@@ -163,7 +167,6 @@ Fue.newComponent = function ({
 }) {
   const $el = document.querySelector(el);
   $el.insertAdjacentHTML("beforeend", html);
-  new Fue({ el, data, methods });
 };
 
 export { Fue };
